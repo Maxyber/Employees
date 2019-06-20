@@ -1,0 +1,15 @@
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Сотрудники\Employees\bin\Debug\Employees.exe.config
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Сотрудники\Employees\bin\Debug\Employees.exe
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Сотрудники\Employees\bin\Debug\Employees.pdb
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Сотрудники\Employees\obj\Debug\Employees.csprojAssemblyReference.cache
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Сотрудники\Employees\obj\Debug\MainWindow.g.cs
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Сотрудники\Employees\obj\Debug\App.g.cs
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Сотрудники\Employees\obj\Debug\Employees_MarkupCompile.cache
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Сотрудники\Employees\obj\Debug\Employees_MarkupCompile.lref
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Сотрудники\Employees\obj\Debug\MainWindow.baml
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Сотрудники\Employees\obj\Debug\Employees.g.resources
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Сотрудники\Employees\obj\Debug\Employees.Properties.Resources.resources
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Сотрудники\Employees\obj\Debug\Employees.csproj.GenerateResource.cache
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Сотрудники\Employees\obj\Debug\Employees.csproj.CoreCompileInputs.cache
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Сотрудники\Employees\obj\Debug\Employees.exe
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Сотрудники\Employees\obj\Debug\Employees.pdb
