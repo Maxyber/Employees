@@ -45,29 +45,18 @@ namespace Employees
         /// <summary>
         /// Загружает информацию о сотрудниках из базы данных
         /// </summary>
-        /*
         public void LoadData()
         {
-            using (Stream loadStream = new FileStream(path, FileMode.Open, FileAccess.Read))
-            {
-                XmlSerializer xmlFormat = new XmlSerializer(typeof(List<Employee>));
-                empList = (List<Employee>)xmlFormat.Deserialize(loadStream);
-            }
-            foreach (Employee item in empList)
-                if (nextId < item.Id) nextId = item.Id;
+
         }
         /// <summary>
         /// Сохраняет список сотрудников в базу данных
         /// </summary>
         public void SaveData()
         {
-            using (Stream saveStream = new FileStream(path, FileMode.Create, FileAccess.Write))
-            {
-                XmlSerializer xmlFormat = new XmlSerializer(typeof(List<Employee>));
-                empList = (List<Employee>)xmlFormat.Deserialize(saveStream);
-            }
+
         }
-        */
+
         /// <summary>
         /// Добавляет нового сотрудника в список
         /// </summary>
@@ -76,7 +65,7 @@ namespace Employees
             this.empList.Add(person);
             count++;
             nextId++;
-            // SaveData();
+            SaveData();
         }
         /// <summary>
         /// Удаляет сотрудника из списка
@@ -85,11 +74,6 @@ namespace Employees
         {
             this.empList.Remove(person);
             count--;
-            SaveData();
-        }
-        public void Default()
-        {
-            AddEmployee(new Employee("Name_1", 1, 1));
             SaveData();
         }
     }

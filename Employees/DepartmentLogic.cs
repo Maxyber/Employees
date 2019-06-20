@@ -47,24 +47,14 @@ namespace Employees
         /// </summary>
         void LoadData()
         {
-            using (Stream loadStream = new FileStream(path, FileMode.Open, FileAccess.Read))
-            {
-                XmlSerializer xmlFormat = new XmlSerializer(typeof(List<Employee>));
-                depList = (List<Department>)xmlFormat.Deserialize(loadStream);
-            }
-            foreach (Department item in depList)
-                if (nextId < item.Id) nextId = item.Id;
+
         }
         /// <summary>
         /// Сохраняет список подразделений в базу данных
         /// </summary>
         void SaveData()
         {
-            using (Stream saveStream = new FileStream(path, FileMode.Create, FileAccess.Write))
-            {
-                XmlSerializer xmlFormat = new XmlSerializer(typeof(List<Department>));
-                depList = (List<Department>)xmlFormat.Deserialize(saveStream);
-            }
+
         }
         /// <summary>
         /// Добавляет новое подразделение в список
@@ -74,7 +64,7 @@ namespace Employees
             this.depList.Add(dep);
             count++;
             nextId++;
-            // SaveData();
+            SaveData();
         }
         /// <summary>
         /// Удаляет подразделение из списка
@@ -83,11 +73,6 @@ namespace Employees
         {
             this.depList.Remove(dep);
             count--;
-            SaveData();
-        }
-        public void Default()
-        {
-            AddDepartment(new Department("Department_1",1));
             SaveData();
         }
     }

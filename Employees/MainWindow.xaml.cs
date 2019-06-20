@@ -32,7 +32,7 @@ namespace Employees
         /// </summary>
         public static void AppInit()
         {
-            // FilesCheck
+            // Database Check
             if (!Directory.Exists("data"))
             {
                 Directory.CreateDirectory(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data"));
@@ -59,7 +59,6 @@ namespace Employees
             {
                 employees.AddEmployee(new Employee($"Name_{i}", 1, employees.NextID));
             }
-            employees.SaveData();
         }
         /// <summary>
         /// Метод, обрабатывающий событие закрытия приложения
