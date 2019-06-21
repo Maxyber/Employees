@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
+using System.Collections.ObjectModel;
 using System.Xml;
 
 namespace Employees
@@ -22,15 +23,18 @@ namespace Employees
     /// </summary>
     public partial class MainWindow : Window
     {
+        public EmployeeLogic employees;
+        public DepartmentLogic departments;
         public MainWindow()
         {
             InitializeComponent();
+            // конец теста, удалить после завершения приложения
             AppInit();
         }
         /// <summary>
         /// Метод, проверяющий наличие всех нужных файлов баз данных и заполняющий их начальными значениями (тестовый слой)
         /// </summary>
-        public static void AppInit()
+        public void AppInit()
         {
             // Database Check
             if (!Directory.Exists("data"))
@@ -52,13 +56,24 @@ namespace Employees
                 }
             }
             // AddData
-            EmployeeLogic employees = new EmployeeLogic(@"data\employees.db");
-            DepartmentLogic departments = new DepartmentLogic(@"data\departments.db");
+            employees = new EmployeeLogic(@"data\employees.db");
+            departments = new DepartmentLogic(@"data\departments.db");
 
             for(int i =0;i<3;i++)
             departments.AddDepartment(new Department($"Подразделение_{i}", departments.NextID));
             for (int i=0; i<10; i++)
                 employees.AddEmployee(new Employee($"Name_{i}", 1, employees.NextID));
+
+            lbEmployees.ItemsSource = employees.ToList();
+            lbDepartments.ItemsSource = departments.ToList();
+        }
+        public void ChoosingItem()
+        {
+            tbId.Text = "0";
+            tbInfo.Text = "Info";
+            tbName.Text = "Name";
+            lblInfo.Content = "Count";
+
         }
         /// <summary>
         /// Метод, обрабатывающий событие закрытия приложения
@@ -70,20 +85,47 @@ namespace Employees
             File.Delete(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"data\departments.db"));
             Directory.Delete(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data"));
         }
-
-        private void BtnAdd_Click(object sender, RoutedEventArgs e)
-        {
-           
-        }
-
-        private void BtnEdit_Click(object sender, RoutedEventArgs e)
+        private void BtnEditEmployee_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void BtnRemove_Click(object sender, RoutedEventArgs e)
+        private void BtnAddEmployee_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+        private void BtnAddDepartment_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void BtnEditDepartment_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void BtnRemoveEmployee_Click(object sender, RoutedEventArgs e)
+        {
+            if (lbEmployees.SelectedItem != null)
+            employees.RemoveEmployee(employees.EmpList[lbEmployees.Items.IndexOf(lbEmployees.SelectedItem)]);
+            lbEmployees.ItemsSource = employees.ToList();
+        }
+        private void BtnRemoveDepartment_Click(object sender, RoutedEventArgs e)
+        {
+            if (lbDepartments.SelectedItem != null)
+                departments.RemoveDepartment(departments.DepList[lbDepartments.Items.IndexOf(lbDepartments.SelectedItem)]);
+            lbDepartments.ItemsSource = departments.ToList();
+        }
+        private void LbEmployees_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (lbEmployees.SelectedItem != null)
+                ChoosingItem();
+        }
+
+        private void LbEmployees_LostFocus(object sender, RoutedEventArgs e)
+        {
+            tbId.Text = "";
+            tbInfo.Text = "";
+            tbName.Text = "";
+            lblInfo.Content = "";
         }
     }
 }

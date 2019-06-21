@@ -5,26 +5,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Xml.Serialization;
+using System.Collections.ObjectModel;
 
 namespace Employees
 {
-    class EmployeeLogic // Класс методов работы с Employee
+    public class EmployeeLogic // Класс методов работы с Employee
     {
         string path; // Путь к базе данных сотрудников
         int count; // Общее количество сотрудников в компании
-        List<Employee> empList; // Список всех сотрудников компании
+        ObservableCollection<Employee> empList; // Список всех сотрудников компании
         int nextId; // Следующий ID, который необходимо присвоить сотруднику
 
         public EmployeeLogic(string vPath)
         {
             path = vPath;
             nextId = 1;
-            empList = new List<Employee>();
+            empList = new ObservableCollection<Employee>();
         }
         /// <summary>
         /// Возвращает список сотрудников компании
         /// </summary>
-        public List<Employee> EmpList
+        public ObservableCollection<Employee> EmpList
         {
             get { return empList; }
         }
@@ -75,6 +76,13 @@ namespace Employees
             this.empList.Remove(person);
             count--;
             SaveData();
+        }
+        public ObservableCollection<string> ToList()
+        {
+            ObservableCollection<string> result = new ObservableCollection<string>();
+            for (int i = 0; i < count; i++)
+                result.Add(empList[i].Name);
+            return result;
         }
     }
 }

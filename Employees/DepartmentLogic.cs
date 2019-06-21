@@ -5,26 +5,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Xml.Serialization;
+using System.Collections.ObjectModel;
 
 namespace Employees
 {
-    class DepartmentLogic
+    public class DepartmentLogic
     {
-        string path; // Путь к базе данных подразделений компании
+        public string path; // Путь к базе данных подразделений компании
         int count; // Общее количество подразделений в компании
-        List<Department> depList; // Список всех подразделений компании
+        ObservableCollection<Department> depList; // Список всех подразделений компании
         int nextId; // Следующий ID, который необходимо присвоить подразделению
 
         public DepartmentLogic(string vPath)
         {
             path = vPath;
             nextId = 1;
-            depList = new List<Department>();
+            depList = new ObservableCollection<Department>();
         }
         /// <summary>
         /// Возвращает список подразделений в компании
         /// </summary>
-        public List<Department> DepList
+        public ObservableCollection<Department> DepList
         {
             get { return depList; }
         }
@@ -74,6 +75,13 @@ namespace Employees
             this.depList.Remove(dep);
             count--;
             SaveData();
+        }
+        public ObservableCollection<string> ToList()
+        {
+            ObservableCollection<string> result = new ObservableCollection<string>();
+            for (int i = 0; i < count; i++)
+                result.Add(depList[i].Name);
+            return result;
         }
     }
 }
