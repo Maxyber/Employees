@@ -54,11 +54,11 @@ namespace Employees
             // AddData
             EmployeeLogic employees = new EmployeeLogic(@"data\employees.db");
             DepartmentLogic departments = new DepartmentLogic(@"data\departments.db");
-            departments.AddDepartment(new Department($"Подразделение_1", departments.NextID));
+
+            for(int i =0;i<3;i++)
+            departments.AddDepartment(new Department($"Подразделение_{i}", departments.NextID));
             for (int i=0; i<10; i++)
-            {
                 employees.AddEmployee(new Employee($"Name_{i}", 1, employees.NextID));
-            }
         }
         /// <summary>
         /// Метод, обрабатывающий событие закрытия приложения
@@ -69,6 +69,21 @@ namespace Employees
             File.Delete(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"data\employees.db"));
             File.Delete(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"data\departments.db"));
             Directory.Delete(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data"));
+        }
+
+        private void BtnAdd_Click(object sender, RoutedEventArgs e)
+        {
+           
+        }
+
+        private void BtnEdit_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnRemove_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

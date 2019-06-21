@@ -10,6 +10,14 @@
         Width="800" VerticalAlignment="Center" Closed="Window_Closed"
         >
     <Grid>
+        <ListBox x:Name="lbEmployees" HorizontalAlignment="Left" Height="241" Margin="35,29,0,0" VerticalAlignment="Top" Width="143"/>
+        <ListBox x:Name="lbDepartments" HorizontalAlignment="Left" Height="188" Margin="196,29,0,0" VerticalAlignment="Top" Width="127"/>
+        <Button x:Name="btnAddEmployee" Content="+ Сотрудник" HorizontalAlignment="Left" Margin="386,43,0,0" VerticalAlignment="Top" Width="75" Click="BtnAdd_Click"/>
+        <Button x:Name="btnRemoveEmployee" Content="- Сотрудник" HorizontalAlignment="Left" Margin="386,136,0,0" VerticalAlignment="Top" Width="75" Click="BtnRemove_Click"/>
+        <Button x:Name="btnEditEmployee" Content="* Сотрудник" HorizontalAlignment="Left" Margin="386,92,0,0" VerticalAlignment="Top" Width="75" Click="BtnEdit_Click"/>
+        <Button x:Name="btnAddDepartment" Content="+ Отдел" HorizontalAlignment="Left" Margin="505,43,0,0" VerticalAlignment="Top" Width="75" Click="BtnAdd_Click"/>
+        <Button x:Name="btnEditDepartment" Content="* Отдел" HorizontalAlignment="Left" Margin="505,92,0,0" VerticalAlignment="Top" Width="75" Click="BtnEdit_Click"/>
+        <Button x:Name="btnRemoveDepartment" Content="- Отдел" HorizontalAlignment="Left" Margin="505,136,0,0" VerticalAlignment="Top" Width="75" Click="BtnRemove_Click"/>
 
     </Grid>
 </Window>
