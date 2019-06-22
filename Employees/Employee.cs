@@ -42,8 +42,12 @@ namespace Employees
         /// </summary>
         public int Department
         {
-            get { return id; }
+            get { return department; }
             set { department = value; }
+        }
+        public override string ToString()
+        {
+            return $"{name} .. {department}";
         }
     }
 }
