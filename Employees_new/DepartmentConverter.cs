@@ -13,12 +13,16 @@ namespace Employees
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var departmentName = (value as ObservableCollection<Department>);
-                return 1;
+            string departmentName = "";
+            var departmentId = ToInt32(value);
+            
+            return departmentName;
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return 2;
+            string departmentName = value.ToString();
+            int departmentId = ToInt32(value);
+            return departmentId;
         }
     }
 }

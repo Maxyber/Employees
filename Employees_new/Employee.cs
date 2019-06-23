@@ -9,9 +9,9 @@ namespace Employees
     [Serializable]
     public class Employee // Класс сотрудников компании (model)
     {
-        string name; // ФИО сотрудника
-        int department; // ID отдела, в котором работает сотрудник
-        int id; // уникальный ID сотрудника в базе
+        public string name; // ФИО сотрудника
+        public int department; // ID отдела, в котором работает сотрудник
+        public int id; // уникальный ID сотрудника в базе
 
         public Employee()
         {

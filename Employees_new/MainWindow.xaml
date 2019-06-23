@@ -10,6 +10,7 @@
         Width="830" VerticalAlignment="Center" Closed="Window_Closed" ResizeMode="NoResize"
         >
     <Window.Resources>
+        <local:DepartmentConverter x:Key="Conv"/>
     </Window.Resources>
     <Grid Margin="0,0,0,0">
         <Grid.ColumnDefinitions>
@@ -25,18 +26,27 @@
                  SelectionChanged="LbEmployees_SelectionChanged">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ID" Width="30"/>
-                    <GridViewColumn Header="Имя сотрудника" Width="150"/>
-                    <GridViewColumn Header="Название отдела" Width="150"/>
+                    <GridViewColumn Header="ID" Width="30" DisplayMemberBinding="{Binding Id}"/>
+                    <GridViewColumn Header="Имя сотрудника" Width="150" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="Название отдела" Width="150" DisplayMemberBinding="{Binding Department, Converter={StaticResource Conv}}"/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <ListBox x:Name="lbDepartments" 
+        <ListView Name="lbDepartments" 
                  HorizontalAlignment="Stretch" 
+                  ItemsSource="{Binding Path=departments}"
                  Grid.Column="1"
                  Margin="10" 
                  VerticalAlignment="Stretch" 
-                 SelectionChanged="LbDepartments_SelectionChanged"/>
+                 SelectionChanged="LbDepartments_SelectionChanged">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="ID" Width="30" DisplayMemberBinding="{Binding Id}"/>
+                        <GridViewColumn Header="Название отдела" Width="130" DisplayMemberBinding="{Binding Name}"/>
+                        <GridViewColumn Header="Кол-во" Width="90" DisplayMemberBinding="{Binding EmpCount}"/>
+                    </GridView>
+                </ListView.View>
+        </ListView>
         <Button x:Name="btnAdd" 
                 Content="Добавить" 
                 HorizontalAlignment="Stretch" 
@@ -103,6 +113,7 @@
         <ComboBox x:Name="cbDepartments" 
                   HorizontalAlignment="Left" 
                   Margin="45,270,0,0" 
+                  ItemStringFormat="{Binding Path=departments}"
                   VerticalAlignment="Top" 
                   Width="120" Height="22"
                   Visibility="Hidden" 
