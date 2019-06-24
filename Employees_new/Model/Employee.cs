@@ -45,11 +45,9 @@ namespace Employees
             get { return department; }
             set { department = value; }
         }
-        /*
         public override string ToString()
         {
             return $"{name} .. {department}";
         }
-        */
     }
 }

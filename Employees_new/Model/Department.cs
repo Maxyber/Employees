@@ -45,11 +45,9 @@ namespace Employees
             get { return empCount; }
             set { empCount = value; }
         }
-        /*
         public override string ToString()
         {
             return $"{name} .. {EmpCount}";
         }
-        */
     }
 }

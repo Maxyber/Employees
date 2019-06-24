@@ -10,7 +10,6 @@
         Width="830" VerticalAlignment="Center" Closed="Window_Closed" ResizeMode="NoResize"
         >
     <Window.Resources>
-        <local:DepartmentConverter x:Key="Conv"/>
     </Window.Resources>
     <Grid Margin="0,0,0,0">
         <Grid.ColumnDefinitions>
@@ -20,30 +19,26 @@
         </Grid.ColumnDefinitions>
         <ListView Name="lbEmployees" 
                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-                  ItemsSource="{Binding Path=employees}"
                  Grid.Column="0"
-                 Margin="10" 
-                 SelectionChanged="LbEmployees_SelectionChanged">
+                 Margin="10">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ID" Width="30" DisplayMemberBinding="{Binding Id}"/>
-                    <GridViewColumn Header="Имя сотрудника" Width="150" DisplayMemberBinding="{Binding Name}"/>
-                    <GridViewColumn Header="Название отдела" Width="150" DisplayMemberBinding="{Binding Department, Converter={StaticResource Conv}}"/>
+                    <GridViewColumn Header="ID" Width="30"/>
+                    <GridViewColumn Header="Имя сотрудника" Width="150"/>
+                    <GridViewColumn Header="Название отдела" Width="150"/>
                 </GridView>
             </ListView.View>
         </ListView>
         <ListView Name="lbDepartments" 
                  HorizontalAlignment="Stretch" 
-                  ItemsSource="{Binding Path=departments}"
                  Grid.Column="1"
                  Margin="10" 
-                 VerticalAlignment="Stretch" 
-                 SelectionChanged="LbDepartments_SelectionChanged">
+                 VerticalAlignment="Stretch">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="ID" Width="30" DisplayMemberBinding="{Binding Id}"/>
-                        <GridViewColumn Header="Название отдела" Width="130" DisplayMemberBinding="{Binding Name}"/>
-                        <GridViewColumn Header="Кол-во" Width="90" DisplayMemberBinding="{Binding EmpCount}"/>
+                        <GridViewColumn Header="ID" Width="30"/>
+                        <GridViewColumn Header="Название отдела" Width="130"/>
+                        <GridViewColumn Header="Кол-во" Width="70"/>
                     </GridView>
                 </ListView.View>
         </ListView>
@@ -52,19 +47,19 @@
                 HorizontalAlignment="Stretch" 
                 Margin="10" 
                 VerticalAlignment="Top" 
-                Width="160" Click="BtnAdd_Click" Grid.Column="2" Height="50"/>
+                Width="160" Grid.Column="2" Height="50"/>
         <Button x:Name="btnEdit" 
                 Content="Изменить" 
                 HorizontalAlignment="Stretch" 
                 Margin="10, 70" 
                 VerticalAlignment="Top" 
-                Width="160" Click="BtnEdit_Click" Grid.Column="2" Height="50"/>
+                Width="160" Grid.Column="2" Height="50"/>
         <Button x:Name="btnRemove" 
                 Content="Удалить" 
                 HorizontalAlignment="Stretch" 
                 Margin="10,130" 
                 VerticalAlignment="Top" 
-                Width="160" Click="BtnRemove_Click" Grid.Column="2" Height="50"/>
+                Width="160" Grid.Column="2" Height="50"/>
         <TextBox x:Name="tbId" 
                  HorizontalAlignment="Left" 
                  Height="23" Width="120"
@@ -94,7 +89,7 @@
                  HorizontalAlignment="Left" 
                  Height="23" Width="120"
                  Margin="45,230,0,0" 
-                 TextWrapping="Wrap" 
+                 TextWrapping="NoWrap" 
                  VerticalAlignment="Top" Grid.Column="2"/>
         <TextBox x:Name="tbInfo" 
                  HorizontalAlignment="Left" 
@@ -113,11 +108,11 @@
         <ComboBox x:Name="cbDepartments" 
                   HorizontalAlignment="Left" 
                   Margin="45,270,0,0" 
-                  ItemStringFormat="{Binding Path=departments}"
                   VerticalAlignment="Top" 
                   Width="120" Height="22"
                   Visibility="Hidden" 
-                  SelectionChanged="CbDepartments_SelectionChanged" Grid.Column="2"/>
+                  Grid.Column="2"/>
+        <CheckBox x:Name="checkDep" Content="CheckBox" Grid.Column="2" HorizontalAlignment="Left" Margin="13,293,0,0" VerticalAlignment="Top" Visibility="Hidden"/>
 
     </Grid>
 </Window>

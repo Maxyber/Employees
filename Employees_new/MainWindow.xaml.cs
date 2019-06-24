@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,46 +12,60 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
-using System.Collections.ObjectModel;
 using System.Xml;
+using System.Collections.ObjectModel;
+using Employees.PresentEmpDep;
 
 namespace Employees
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, IView
     {
-        public delegate void ChangeList();
-        ChangeList changing; // делегат для изменения объекта
-        ChangeList choosing; // делегат обработки данных при выборе объекта
-        ChangeList adding; // делегат для добавления объекта
-        ChangeList removing; // делегат для удаления объекта
-        public Random r = new Random();
-        public ObservableCollection<Employee> employees = new ObservableCollection<Employee>(); // список сотрудников
-        public ObservableCollection<Department> departments = new ObservableCollection<Department>(); // список отделов
-
+        Presenter p;
         public MainWindow()
         {
             InitializeComponent();
-            AppInit();
+            p = new Presenter(this);
+
+            btnAdd.Click += delegate { p.Add(); };
+            btnEdit.Click += delegate { p.Edit(); };
+            btnRemove.Click += delegate { p.Remove(); };
+            lbEmployees.SelectionChanged += delegate { p.ChoosingEmployee(); };
         }
-        /// <summary>
-        /// Метод, заполняющий списки отделов и сотрудников
-        /// </summary>
-        public void AppInit()
+        public ObservableCollection<Department> Departments
         {
-            // AddData
-            for (int i = 0; i < 3; i++)
-                departments.Add(new Department($"Department_{i}", i));
-            for (int i = 0; i < 10; i++)
-                employees.Add(new Employee($"Name_{i}", r.Next(3), i));
-            CalcDepartments();
-            // привязка к листбоксам
-            lbEmployees.ItemsSource = employees;
-            lbDepartments.ItemsSource = departments;
-            cbDepartments.ItemsSource = departments;
+            get => (lbDepartments.SelectedItem as ObservableCollection<Department>);
+            set => lbDepartments.ItemsSource = value;
         }
+        public ObservableCollection<Employee> Employees
+        {
+            get => (lbDepartments.SelectedItem as ObservableCollection<Employee>);
+            set => lbDepartments.ItemsSource = value;
+        }
+        public int Id
+        {
+            get => Int32.Parse(tbId.Text);
+            set => tbId.Text = value.ToString();
+        }
+        public string ItemName
+        {
+            get => tbName.Text;
+            set => tbName.Text = value;
+        }
+        public int Info
+        {
+            get => Int32.Parse(tbInfo.Text);
+            set => tbInfo.Text = value.ToString();
+        }
+        public bool? CheckDep
+        {
+            get => checkDep.IsChecked;
+            set => checkDep.IsChecked = value;
+        }
+
+
         /// <summary>
         /// Метод, обновляющий списки в листбоксах после изменения данных (самостоятельно не обновляется почему-то)
         /// </summary>
@@ -61,16 +74,7 @@ namespace Employees
             lbEmployees.Items.Refresh();
             lbDepartments.Items.Refresh();
         }
-        /// <summary>
-        /// Метод, считающий количество сотрудников по отделам
-        /// </summary>
-        public void CalcDepartments()
-        {
-            foreach (Department item in departments)
-                item.EmpCount = 0;
-            foreach (Employee item in employees)
-                ++departments[item.Department].EmpCount;
-        }
+        /*
         /// <summary>
         /// Метод, изменяющий параметры формы после выбора сотрудника в соответствующем списке
         /// </summary>
@@ -103,79 +107,12 @@ namespace Employees
                 lblInfo.Content = "Кол.";
             }
         }
-        /// <summary>
-        /// Метод, редактирующий сотрудника после нажатия соответствующей кнопки
-        /// </summary>
-        public void ChangeEmployee()
-        {
-            int index = (lbEmployees.SelectedItem as Employee).Id;
-            employees[index].Name = tbName.Text;
-            employees[index].Department = Int32.Parse(lblDepartmentId.Content.ToString());
-            CalcDepartments();
-        }
-        /// <summary>
-        /// Метод, редактирующий отдел после нажатия соответствующей кнопки
-        /// </summary>
-        public void ChangeDepartment()
-        {
-            int index = (lbDepartments.SelectedItem as Department).Id;
-            departments[index].Name = tbName.Text;
-        }
-        /// <summary>
-        /// Метод, добавляющий сотрудника после нажатия соответствующей кнопки
-        /// </summary>
-        public void AddEmployee()
-        {
-            int maxId = 0;
-            foreach (Employee item in employees)
-                if (item.Id > maxId) maxId = item.Id;
-            employees.Add(new Employee(tbName.Text, Int32.Parse(lblDepartmentId.Content.ToString()), maxId + 1));
-            CalcDepartments();
-        }
-        /// <summary>
-        /// Метод, добавляющий отдел после нажатия соответствующей кнопки
-        /// </summary>
-        public void AddDepartment()
-        {
-            int maxId = 0;
-            foreach (Department item in departments)
-                if (item.Id > maxId) maxId = item.Id;
-            departments.Add(new Department(tbName.Text, maxId + 1));
-        }
-        /// <summary>
-        /// Метод, удаляющий сотрудника после нажатия соответствующей кнопки
-        /// </summary>
-        public void RemoveEmployee()
-        {
-            employees.Remove(lbEmployees.SelectedItem as Employee);
-        }
-        /// <summary>
-        /// Метод, удаляющий департамент после нажатия соответствующей кнопки, если в нем не осталось сотрудников
-        /// </summary>
-        public void RemoveDepartment()
-        {
-            if ((lbDepartments.SelectedItem as Department).EmpCount == 0)
-                departments.Remove(lbDepartments.SelectedItem as Department);
-            else throw new Exception("Невозможно удалить не пустой отдел. Измените отдел всех сотрудников, после этого можно удалить.");
-        }
+        */
         // Методы, обрабатывающие события
         private void Window_Closed(object sender, EventArgs e)
         {
         }
-        private void BtnEdit_Click(object sender, RoutedEventArgs e)
-        {
-            changing?.Invoke();
-            RefreshData();
-        }
-
-        private void BtnAdd_Click(object sender, RoutedEventArgs e)
-        {
-            adding?.Invoke();
-        }
-        private void BtnRemove_Click(object sender, RoutedEventArgs e)
-        {
-            removing?.Invoke();
-        }
+        /*
         private void LbEmployees_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             changing = ChangeEmployee;
@@ -198,5 +135,6 @@ namespace Employees
         {
             lblDepartmentId.Content = (cbDepartments.SelectedItem as Department).Id.ToString();
         }
+        */
     }
 }
