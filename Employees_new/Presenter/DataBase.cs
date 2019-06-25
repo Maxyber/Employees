@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace Employees.PresentEmpDep
 {
-    class DataBase
+    class DataBase : INotifyPropertyChanged
     {
         /*
         public delegate void ChangeList();
@@ -19,6 +20,7 @@ namespace Employees.PresentEmpDep
         public Random r = new Random();
         public static ObservableCollection<Employee> employees = new ObservableCollection<Employee>(); // список сотрудников
         public static ObservableCollection<Department> departments = new ObservableCollection<Department>(); // список отделов
+        public event PropertyChangedEventHandler PropertyChanged;
         public DataBase(int empCount, int depCount)
         {
             for (int i = 0; i < depCount; i++)
@@ -27,6 +29,8 @@ namespace Employees.PresentEmpDep
                 employees.Add(new Employee($"Name_{i}", r.Next(depCount), i));
             CalcDepartments();
         }
+        public ObservableCollection<Employee> GetEmployees => employees;
+        public ObservableCollection<Department> GetDepartments => departments;
         /// <summary>
         /// Метод, считающий количество сотрудников по отделам
         /// </summary>

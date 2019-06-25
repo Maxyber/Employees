@@ -10,11 +10,12 @@ namespace Employees.PresentEmpDep
 {
     public interface IView
     {
-        ObservableCollection<Department> Departments { get; set; }
-        ObservableCollection<Employee> Employees { get; set; }
+        Department VDepartment { get; set; }
+        Employee VEmployee { get; set; }
         int Id { get; set; }
         int Info { get; set; }
         string ItemName { get; set; }
         bool? CheckDep { get; set; }
+        int Index { get; set; }
     }
 }

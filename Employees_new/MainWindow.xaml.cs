@@ -29,20 +29,25 @@ namespace Employees
             InitializeComponent();
             p = new Presenter(this);
 
+            lbEmployees.ItemsSource = p.GetEmployees();
+            lbDepartments.ItemsSource = p.GetDepartments();
+            cbDepartments.ItemsSource = p.GetDepartments();
+            
             btnAdd.Click += delegate { p.Add(); };
-            btnEdit.Click += delegate { p.Edit(); };
-            btnRemove.Click += delegate { p.Remove(); };
-            lbEmployees.SelectionChanged += delegate { p.ChoosingEmployee(); };
+            btnEdit.Click += delegate { p.Edit(); /*lbEmployees.Items.Refresh(); lbDepartments.Items.Refresh(); */};
+            btnRemove.Click += delegate { p.Remove(); /*lbEmployees.Items.Refresh(); lbDepartments.Items.Refresh();*/ };
+            lbEmployees.SelectionChanged += delegate { checkDep.IsChecked = false; cbDepartments.Visibility = Visibility.Visible; p.Choosing(); };
+            lbDepartments.SelectionChanged += delegate { checkDep.IsChecked = true; cbDepartments.Visibility = Visibility.Hidden; p.Choosing(); };
         }
-        public ObservableCollection<Department> Departments
+        public Department VDepartment
         {
-            get => (lbDepartments.SelectedItem as ObservableCollection<Department>);
-            set => lbDepartments.ItemsSource = value;
+            get => (lbDepartments.SelectedItem as Department);
+            set { }
         }
-        public ObservableCollection<Employee> Employees
+        public Employee VEmployee
         {
-            get => (lbDepartments.SelectedItem as ObservableCollection<Employee>);
-            set => lbDepartments.ItemsSource = value;
+            get => (lbEmployees.SelectedItem as Employee);
+            set { }
         }
         public int Id
         {
@@ -56,85 +61,53 @@ namespace Employees
         }
         public int Info
         {
-            get => Int32.Parse(tbInfo.Text);
-            set => tbInfo.Text = value.ToString();
+            get
+            {
+                if (CheckDep.Value) return Int32.Parse(tbInfo.Text);
+                else return cbDepartments.SelectedIndex;
+            }
+            set
+            {
+                if (CheckDep.Value) tbInfo.Text = value.ToString();
+                else
+                {
+                    try
+                    {
+                        cbDepartments.SelectedIndex = VEmployee.Department;
+                    }
+                    catch (NullReferenceException)
+                    {
+                        cbDepartments.SelectedIndex = 0;
+                    }
+                }
+            }
         }
         public bool? CheckDep
         {
             get => checkDep.IsChecked;
             set => checkDep.IsChecked = value;
         }
-
-
-        /// <summary>
-        /// Метод, обновляющий списки в листбоксах после изменения данных (самостоятельно не обновляется почему-то)
-        /// </summary>
-        public void RefreshData()
+        public int Index
         {
-            lbEmployees.Items.Refresh();
-            lbDepartments.Items.Refresh();
-        }
-        /*
-        /// <summary>
-        /// Метод, изменяющий параметры формы после выбора сотрудника в соответствующем списке
-        /// </summary>
-        public void ChoosingEmployee()
-        {
-            if (lbEmployees.SelectedItem != null)
+            get
             {
-                tbId.Text = (lbEmployees.SelectedItem as Employee).Id.ToString();
-                tbInfo.Text = departments[(lbEmployees.SelectedItem as Employee).Department].Name;
-                tbName.Text = (lbEmployees.SelectedItem as Employee).Name.ToString();
-                lblDepartmentId.Content = (lbEmployees.SelectedItem as Employee).Department;
-                tbInfo.Visibility = Visibility.Hidden;
-                cbDepartments.Visibility = Visibility.Visible;
-                cbDepartments.SelectedIndex = (lbEmployees.SelectedItem as Employee).Department;
-                lblInfo.Content = "Отд.";
+                try
+                {
+                    if (CheckDep.Value) return VDepartment.Id;
+                    else return VEmployee.Id;
+                }
+                catch (NullReferenceException)
+                {
+                    return 0;
+                }
+            }
+            set
+            {
             }
         }
-        /// <summary>
-        /// Метод, изменяющий параметры формы после выбора отдела в соответствующем списке
-        /// </summary>
-        public void ChoosingDepartment()
-        {
-            if (lbDepartments.SelectedItem != null)
-            {
-                tbId.Text = (lbDepartments.SelectedItem as Department).Id.ToString();
-                tbInfo.Text = (lbDepartments.SelectedItem as Department).EmpCount.ToString();
-                tbName.Text = (lbDepartments.SelectedItem as Department).Name.ToString();
-                tbInfo.Visibility = Visibility.Visible;
-                cbDepartments.Visibility = Visibility.Hidden;
-                lblInfo.Content = "Кол.";
-            }
-        }
-        */
         // Методы, обрабатывающие события
         private void Window_Closed(object sender, EventArgs e)
         {
         }
-        /*
-        private void LbEmployees_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            changing = ChangeEmployee;
-            choosing = ChoosingEmployee;
-            adding = AddEmployee;
-            removing = RemoveEmployee;
-            choosing?.Invoke();
-        }
-
-        private void LbDepartments_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            changing = ChangeDepartment;
-            choosing = ChoosingDepartment;
-            adding = AddDepartment;
-            removing = RemoveDepartment;
-            choosing?.Invoke();
-        }
-
-        private void CbDepartments_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            lblDepartmentId.Content = (cbDepartments.SelectedItem as Department).Id.ToString();
-        }
-        */
     }
 }
