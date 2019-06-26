@@ -15,6 +15,7 @@ using System.IO;
 using System.Xml;
 using System.Collections.ObjectModel;
 using Employees.PresentEmpDep;
+using System.ComponentModel;
 
 namespace Employees
 {
@@ -28,14 +29,11 @@ namespace Employees
         {
             InitializeComponent();
             p = new Presenter(this);
+            this.DataContext = p;
 
-            lbEmployees.ItemsSource = p.GetEmployees();
-            lbDepartments.ItemsSource = p.GetDepartments();
-            cbDepartments.ItemsSource = p.GetDepartments();
-            
             btnAdd.Click += delegate { p.Add(); };
-            btnEdit.Click += delegate { p.Edit(); /*lbEmployees.Items.Refresh(); lbDepartments.Items.Refresh(); */};
-            btnRemove.Click += delegate { p.Remove(); /*lbEmployees.Items.Refresh(); lbDepartments.Items.Refresh();*/ };
+            btnEdit.Click += delegate { p.Edit(); if (checkDep.IsChecked == true) lbEmployees.Items.Refresh(); };
+            btnRemove.Click += delegate { p.Remove(); };
             lbEmployees.SelectionChanged += delegate { checkDep.IsChecked = false; cbDepartments.Visibility = Visibility.Visible; p.Choosing(); };
             lbDepartments.SelectionChanged += delegate { checkDep.IsChecked = true; cbDepartments.Visibility = Visibility.Hidden; p.Choosing(); };
         }
@@ -93,11 +91,16 @@ namespace Employees
             {
                 try
                 {
-                    if (CheckDep.Value) return VDepartment.Id;
-                    else return VEmployee.Id;
+                    if (CheckDep.Value) return p.GetDepartments.IndexOf(VDepartment);
+                    else return p.GetEmployees.IndexOf(VEmployee);
                 }
                 catch (NullReferenceException)
                 {
+                    return 0;
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    Console.WriteLine("MainWindow.Index exception");
                     return 0;
                 }
             }

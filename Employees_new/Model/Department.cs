@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Employees
 {
     [Serializable]
-    public class Department // Класс отделов компании (model)
+    public class Department : INotifyPropertyChanged // Класс отделов компании (model)
     {
         string name; // наименование отдела
         int empCount; // количество сотрудников, работающих в отделе
@@ -23,13 +23,17 @@ namespace Employees
             empCount = 0;
             id = vID;
         }
+        public event PropertyChangedEventHandler PropertyChanged;
         /// <summary>
         /// Возвращает или присваивает название отдела
         /// </summary>
         public string Name
         {
             get { return name; }
-            set { name = value; }
+            set {
+                name = value;
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Name)));
+            }
         }
         /// <summary>
         /// Возвращает ID отдела
@@ -44,11 +48,10 @@ namespace Employees
         public int EmpCount
         {
             get { return empCount; }
-            set { empCount = value; }
-        }
-        public override string ToString()
-        {
-            return $"{name} .. {EmpCount}";
+            set {
+                empCount = value;
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.EmpCount)));
+            }
         }
     }
 }

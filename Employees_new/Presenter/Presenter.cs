@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,7 +10,7 @@ namespace Employees.PresentEmpDep
 {
     class Presenter
     {
-        private DataBase db;
+        public DataBase db;
         private IView view;
         public Presenter(IView View)
         {
@@ -33,11 +35,11 @@ namespace Employees.PresentEmpDep
             switch (view.CheckDep)
             {
                 case false:
-                    db.ChangeEmployee(view.Id, view.ItemName, view.Info);
+                    db.ChangeEmployee(view.VEmployee, view.Id, view.ItemName, view.Info);
                     db.CalcDepartments();
                     break;
                 case true:
-                    db.ChangeDepartment(view.Id, view.ItemName);
+                    db.ChangeDepartment(view.VDepartment, view.Id, view.ItemName);
                     break;
             }
         }
@@ -46,38 +48,41 @@ namespace Employees.PresentEmpDep
             switch (view.CheckDep)
             {
                 case false:
-                    db.RemoveEmployee(view.Id);
+                    db.RemoveEmployee(view.VEmployee);
                     db.CalcDepartments();
                     break;
                 case true:
-                    db.RemoveDepartment(view.Id);
+                    db.RemoveDepartment(view.VDepartment);
                     break;
             }
         }
-        public ObservableCollection<Employee> GetEmployees()
-        {
-            return db.GetEmployees;
-        }
-        public ObservableCollection<Department> GetDepartments()
-        {
-            return db.GetDepartments;
-        }
+        public ObservableCollection<Employee> GetEmployees => db.GetEmployees;
+        public ObservableCollection<Department> GetDepartments => db.GetDepartments;
         /// <summary>
         /// Метод, изменяющий параметры формы после выбора сотрудника в соответствующем списке
         /// </summary>
         public void Choosing()
         {
-            if (view.CheckDep == true)
+            try
             {
-                view.Id = db.GetDepartments[view.Index].Id;
-                view.ItemName = db.GetDepartments[view.Index].Name;
-                view.Info = db.GetDepartments[view.Index].EmpCount;
+                if (view.CheckDep == true)
+                {
+                    view.Id = db.GetDepartments[view.Index].Id;
+                    view.ItemName = db.GetDepartments[view.Index].Name;
+                    view.Info = db.GetDepartments[view.Index].EmpCount;
+                }
+                else
+                {
+                    view.Id = db.GetEmployees[view.Index].Id;
+                    view.ItemName = db.GetEmployees[view.Index].Name;
+                    view.Info = db.GetEmployees[view.Index].Department;
+                }
             }
-            else
+            catch (ArgumentOutOfRangeException)
             {
-                view.Id = db.GetEmployees[view.Index].Id;
-                view.ItemName = db.GetEmployees[view.Index].Name;
-                view.Info = db.GetEmployees[view.Index].Department;
+                view.Id = 0;
+                view.ItemName = "";
+                view.Info = 0;
             }
         }
     }
