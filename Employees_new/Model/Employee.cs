@@ -1,13 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 namespace Employees
 {
     [Serializable]
-    public class Employee // Класс сотрудников компании (model)
+    public class Employee : INotifyPropertyChanged // Класс сотрудников компании (model)
     {
         public string name; // ФИО сотрудника
         public int department; // ID отдела, в котором работает сотрудник
@@ -22,13 +24,18 @@ namespace Employees
             department = vDepartment;
             id = vID;
         }
+        public event PropertyChangedEventHandler PropertyChanged;
         /// <summary>
         /// Возвращает или присваивает ФИО сотрудника
         /// </summary>
         public string Name
         {
             get { return name; }
-            set { name = value; }
+            set
+            {
+                name = value;
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Name)));
+            }
         }
         /// <summary>
         /// Возвращает ID сотрудника в базе
@@ -43,11 +50,11 @@ namespace Employees
         public int Department
         {
             get { return department; }
-            set { department = value; }
-        }
-        public override string ToString()
-        {
-            return $"{name} .. {department}";
+            set
+            {
+                department = value;
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Department)));
+            }
         }
     }
 }
