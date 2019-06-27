@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Data.SqlClient;
+using System.Diagnostics;
+using System.Configuration;
 
 namespace Employees.PresentEmpDep
 {
@@ -14,16 +17,22 @@ namespace Employees.PresentEmpDep
         public Random r = new Random();
         public static ObservableCollection<Employee> employees = new ObservableCollection<Employee>(); // список сотрудников
         public static ObservableCollection<Department> departments = new ObservableCollection<Department>(); // список отделов
+        private string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString; // строка подключения к БД, прописанная в App.config
 
         /// <summary>
         /// Конструктор базы, создающий empCount сотрудников, входящих в depCount отделов
         /// </summary>
         public DataBase(int empCount, int depCount)
         {
+            /*
             for (int i = 0; i < depCount; i++)
                 departments.Add(new Department($"Department_{i}", i));
+            */
+            DataBaseDataRead();
+            /*
             for (int i = 0; i < empCount; i++)
                 employees.Add(new Employee($"Name_{i}", r.Next(depCount), i));
+            */
             CalcDepartments();
         }
         public ObservableCollection<Employee> GetEmployees => employees;
@@ -113,5 +122,110 @@ namespace Employees.PresentEmpDep
                 if (departments[i].Id == id) depIndex = i;
             return depIndex;
         }
+        #region Методы работы с БД
+        // Метод, добавляющий в БД отделы в количестве depCount и сотрудников в количестве empCount, запускается один раз
+        public void DataBaseDataCreate(int depCount, int empCount)
+        {
+            try
+            {
+                var random = new Random();
+                for (int i = 0; i < depCount; i++)
+                {
+                    var department = new Department($"Department_{i}", i);
+
+                    var sql = String.Format("INSERT INTO Departments (Id, Name, EmpCount) VALUES (N'{0}', '{1}', '{2}')", department.Id, department.Name, department.EmpCount);
+                    Debug.WriteLine(sql);
+
+                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    {
+                        connection.Open();
+
+                        SqlCommand command = new SqlCommand(sql, connection);
+                        command.ExecuteNonQuery();
+                    }
+                }
+                for (int i = 0; i < empCount; i++)
+                {
+                    var employee = new Employee($"Name_{i}", random.Next(10), i);
+
+                    var sql = String.Format("INSERT INTO Employees (Id, Name, Department) VALUES (N'{0}', '{1}', '{2}')", employee.Id, employee.Name, employee.Department);
+                    Debug.WriteLine(sql);
+
+                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    {
+                        connection.Open();
+
+                        SqlCommand command = new SqlCommand(sql, connection);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                Console.WriteLine("exit");
+            }
+        }
+        // Метод чтения данных из БД
+        public void DataBaseDataRead()
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    var sql = @"SELECT * FROM Departments";
+                    SqlCommand command = new SqlCommand(sql, connection);
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Console.WriteLine($"{reader.GetValue(0)} | {reader["Name"]} | {reader[2]}");
+                        departments.Add(new Department(reader["Name"].ToString(),Int32.Parse(reader["Id"].ToString())));
+                    }
+                }
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    var sql = @"SELECT * FROM Employees";
+                    SqlCommand command = new SqlCommand(sql, connection);
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Console.WriteLine($"{reader.GetValue(0)} | {reader["Name"]} | {reader[2]}");
+                        employees.Add(new Employee(reader["Name"].ToString(), Int32.Parse(reader["Department"].ToString()), Int32.Parse(reader["Id"].ToString())));
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+        // Метод записи данных в БД
+        public void DataBaseDataSave()
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    var sql = @"TRUNCATE TABLE Departments";
+                    SqlCommand command = new SqlCommand(sql, connection);
+                    // SqlDataAdapter adapter = command.ExecuteNonQuery();
+
+
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+        #endregion
     }
 }

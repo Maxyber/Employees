@@ -16,9 +16,13 @@ using System.Xml;
 using System.Collections.ObjectModel;
 using Employees.PresentEmpDep;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Data.SqlClient;
 
 namespace Employees
 {
+    // строка подключения к БД
+    // Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=lesson7;Integrated Security=True;Pooling=False
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
@@ -28,6 +32,7 @@ namespace Employees
         public MainWindow()
         {
             InitializeComponent();
+            // DataBaseDataCreate(10, 200); метод заполнения БД данными, используется только 1 раз при создании приложения
             p = new Presenter(this);
             this.DataContext = p;
 

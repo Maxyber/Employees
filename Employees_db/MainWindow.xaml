@@ -25,8 +25,8 @@
                  Margin="10">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="25"/>
-                    <GridViewColumn Header="Имя сотрудника" DisplayMemberBinding="{Binding Name}" Width="150"/>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="40"/>
+                    <GridViewColumn Header="Имя сотрудника" DisplayMemberBinding="{Binding Name}" Width="135"/>
                     <GridViewColumn Header="Название отдела" x:Name="depId" 
                                     DisplayMemberBinding="{Binding Department, Converter={StaticResource Conv}, UpdateSourceTrigger=PropertyChanged}"
                                     Width="150"/>
