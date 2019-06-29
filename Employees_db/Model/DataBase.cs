@@ -14,25 +14,24 @@ namespace Employees.PresentEmpDep
 {
     class DataBase
     {
+        /*
+        <connectionString>
+            <add name ="DefaultConnection"
+            connectionString="Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=lesson7; Integrated Security=True; Pooling=False"/>
+        </connectionString>
+        */
         public Random r = new Random();
         public static ObservableCollection<Employee> employees = new ObservableCollection<Employee>(); // список сотрудников
         public static ObservableCollection<Department> departments = new ObservableCollection<Department>(); // список отделов
-        private string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString; // строка подключения к БД, прописанная в App.config
+        // private string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString; // строка подключения к БД, прописанная в App.config
+        private string connectionString = @"Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=lesson7; Integrated Security=True; Pooling=False"; // строка подключения к БД, прописанная вручную
 
         /// <summary>
         /// Конструктор базы, создающий empCount сотрудников, входящих в depCount отделов
         /// </summary>
         public DataBase(int empCount, int depCount)
         {
-            /*
-            for (int i = 0; i < depCount; i++)
-                departments.Add(new Department($"Department_{i}", i));
-            */
             DataBaseDataRead();
-            /*
-            for (int i = 0; i < empCount; i++)
-                employees.Add(new Employee($"Name_{i}", r.Next(depCount), i));
-            */
             CalcDepartments();
         }
         public ObservableCollection<Employee> GetEmployees => employees;
@@ -53,7 +52,7 @@ namespace Employees.PresentEmpDep
         public void ChangeEmployee(Employee vEmployee, int itemId, string name, int depId)
         {
             employees[employees.IndexOf(vEmployee)].Name = name;
-            employees[employees.IndexOf(vEmployee)].Department = depId;
+            employees[employees.IndexOf(vEmployee)].Department = GetDepartments[depId].Id;
             CalcDepartments();
         }
         /// <summary>
@@ -184,7 +183,7 @@ namespace Employees.PresentEmpDep
                     while (reader.Read())
                     {
                         Console.WriteLine($"{reader.GetValue(0)} | {reader["Name"]} | {reader[2]}");
-                        departments.Add(new Department(reader["Name"].ToString(),Int32.Parse(reader["Id"].ToString())));
+                        departments.Add(new Department(reader["Name"].ToString(), Int32.Parse(reader["Id"].ToString())));
                     }
                 }
                 using (SqlConnection connection = new SqlConnection(connectionString))
@@ -216,8 +215,22 @@ namespace Employees.PresentEmpDep
                     connection.Open();
                     var sql = @"TRUNCATE TABLE Departments";
                     SqlCommand command = new SqlCommand(sql, connection);
-                    // SqlDataAdapter adapter = command.ExecuteNonQuery();
-
+                    command.ExecuteNonQuery();
+                    sql = @"TRUNCATE TABLE Employees";
+                    command = new SqlCommand(sql, connection);
+                    command.ExecuteNonQuery();
+                    foreach (Department item in departments)
+                    {
+                        sql = String.Format("INSERT INTO Departments (Id, Name, EmpCount) VALUES (N'{0}', '{1}', '{2}')", item.Id, item.Name, item.EmpCount);
+                        command = new SqlCommand(sql, connection);
+                        command.ExecuteNonQuery();
+                    }
+                    foreach (Employee item in employees)
+                    {
+                        sql = String.Format("INSERT INTO Employees (Id, Name, Department) VALUES (N'{0}', '{1}', '{2}')", item.Id, item.Name, item.Department);
+                        command = new SqlCommand(sql, connection);
+                        command.ExecuteNonQuery();
+                    }
 
                 }
             }

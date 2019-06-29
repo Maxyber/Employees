@@ -85,5 +85,9 @@ namespace Employees.PresentEmpDep
                 view.Info = 0;
             }
         }
+        public void Save()
+        {
+            db.DataBaseDataSave();
+        }
     }
 }

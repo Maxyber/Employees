@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" 
         Height="350" HorizontalAlignment="Center"
-        Width="830" VerticalAlignment="Center" Closed="Window_Closed" ResizeMode="NoResize"
+        Width="830" VerticalAlignment="Center" Closed="Window_Closed" ResizeMode="NoResize" Closing="Window_Closing"
         >
     <Window.Resources>
         <local:DepartmentConverter x:Key="Conv"/>

@@ -32,9 +32,12 @@ namespace Employees
         public MainWindow()
         {
             InitializeComponent();
-            // DataBaseDataCreate(10, 200); метод заполнения БД данными, используется только 1 раз при создании приложения
             p = new Presenter(this);
             this.DataContext = p;
+            /*
+            p.db.DataBaseDataCreate(10, 200); //метод заполнения БД данными, используется только 1 раз при создании приложения
+            p.db.DataBaseDataRead(); // метод загрузки из БД данными
+            */
 
             btnAdd.Click += delegate { p.Add(); };
             btnEdit.Click += delegate { p.Edit(); if (checkDep.IsChecked == true) lbEmployees.Items.Refresh(); };
@@ -116,6 +119,11 @@ namespace Employees
         // Методы, обрабатывающие события
         private void Window_Closed(object sender, EventArgs e)
         {
+        }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            p.Save();
         }
     }
 }
