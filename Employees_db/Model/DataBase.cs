@@ -23,8 +23,8 @@ namespace Employees.PresentEmpDep
         public Random r = new Random();
         public static ObservableCollection<Employee> employees = new ObservableCollection<Employee>(); // список сотрудников
         public static ObservableCollection<Department> departments = new ObservableCollection<Department>(); // список отделов
-        // private string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString; // строка подключения к БД, прописанная в App.config
-        private string connectionString = @"Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=lesson7; Integrated Security=True; Pooling=False"; // строка подключения к БД, прописанная вручную
+        private string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString; // строка подключения к БД, прописанная в App.config
+        //private string connectionString = @"Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=lesson7; Integrated Security=True; Pooling=False"; // строка подключения к БД, прописанная вручную
 
         /// <summary>
         /// Конструктор базы, создающий empCount сотрудников, входящих в depCount отделов
