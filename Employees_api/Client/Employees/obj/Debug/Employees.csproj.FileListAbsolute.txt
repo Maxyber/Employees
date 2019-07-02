@@ -1,0 +1,6 @@
+K:\Arhiv\Documents\Programmer study\Csharp_lvl2\Сотрудники\Employees_api\Client\Employees\obj\Debug\Employees.csprojAssemblyReference.cache
+K:\Arhiv\Documents\Programmer study\Csharp_lvl2\Сотрудники\Employees_api\Client\Employees\obj\Debug\MainWindow.g.cs
+K:\Arhiv\Documents\Programmer study\Csharp_lvl2\Сотрудники\Employees_api\Client\Employees\obj\Debug\App.g.cs
+K:\Arhiv\Documents\Programmer study\Csharp_lvl2\Сотрудники\Employees_api\Client\Employees\obj\Debug\GeneratedInternalTypeHelper.g.cs
+K:\Arhiv\Documents\Programmer study\Csharp_lvl2\Сотрудники\Employees_api\Client\Employees\obj\Debug\Employees_MarkupCompile.cache
+K:\Arhiv\Documents\Programmer study\Csharp_lvl2\Сотрудники\Employees_api\Client\Employees\obj\Debug\Employees_MarkupCompile.lref
