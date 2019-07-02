@@ -65,7 +65,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Connected Services\Employees\Reference.cs">
+    <Compile Include="Connected Services\Employees_server\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -76,8 +76,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Department.cs" />
-    <Compile Include="Model\Employee.cs" />
+    <Compile Include="Presenter\DepartmentConverter.cs" />
     <Compile Include="Presenter\IView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -96,25 +95,37 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Connected Services\Employees\Employees.Employees.Department.datasource">
+    <None Include="Connected Services\Employees_server\Employees.Employees_server.AddResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\Employees\Employees.Employees.Employee.datasource">
+    <None Include="Connected Services\Employees_server\Employees.Employees_server.Department.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\Employees\Employees.Employees.GetDepartmentResponse.datasource">
+    <None Include="Connected Services\Employees_server\Employees.Employees_server.EditResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\Employees\Employees.Employees.GetDepartmentsResponse.datasource">
+    <None Include="Connected Services\Employees_server\Employees.Employees_server.Employee.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\Employees\Employees.Employees.GetEmployeeResponse.datasource">
+    <None Include="Connected Services\Employees_server\Employees.Employees_server.GetDepartmentResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\Employees\Employees.Employees.GetEmployeesResponse.datasource">
+    <None Include="Connected Services\Employees_server\Employees.Employees_server.GetDepartmentsResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\Employees\Employees_service.wsdl" />
+    <None Include="Connected Services\Employees_server\Employees.Employees_server.GetEmployeeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Employees_server\Employees.Employees_server.GetEmployeesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Employees_server\Employees.Employees_server.NameByIdResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Employees_server\Employees.Employees_server.RemoveResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Employees_server\Employees_service.wsdl" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -127,22 +138,25 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\Employees\" />
+    <WCFMetadataStorage Include="Connected Services\Employees_server\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\Employees\Employees_service.disco" />
+    <None Include="Connected Services\Employees_server\Employees_service.disco" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\Employees\configuration91.svcinfo" />
+    <None Include="Connected Services\Employees_server\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\Employees\configuration.svcinfo" />
+    <None Include="Connected Services\Employees_server\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\Employees\Reference.svcmap">
+    <None Include="Connected Services\Employees_server\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Model\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

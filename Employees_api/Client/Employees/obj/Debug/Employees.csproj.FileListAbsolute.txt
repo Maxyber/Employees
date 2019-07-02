@@ -4,3 +4,13 @@ K:\Arhiv\Documents\Programmer study\Csharp_lvl2\Сотрудники\Employees_a
 K:\Arhiv\Documents\Programmer study\Csharp_lvl2\Сотрудники\Employees_api\Client\Employees\obj\Debug\GeneratedInternalTypeHelper.g.cs
 K:\Arhiv\Documents\Programmer study\Csharp_lvl2\Сотрудники\Employees_api\Client\Employees\obj\Debug\Employees_MarkupCompile.cache
 K:\Arhiv\Documents\Programmer study\Csharp_lvl2\Сотрудники\Employees_api\Client\Employees\obj\Debug\Employees_MarkupCompile.lref
+K:\Arhiv\Documents\Programmer study\Csharp_lvl2\Сотрудники\Employees_api\Client\Employees\bin\Debug\Employees.exe.config
+K:\Arhiv\Documents\Programmer study\Csharp_lvl2\Сотрудники\Employees_api\Client\Employees\bin\Debug\Employees.exe
+K:\Arhiv\Documents\Programmer study\Csharp_lvl2\Сотрудники\Employees_api\Client\Employees\bin\Debug\Employees.pdb
+K:\Arhiv\Documents\Programmer study\Csharp_lvl2\Сотрудники\Employees_api\Client\Employees\obj\Debug\MainWindow.baml
+K:\Arhiv\Documents\Programmer study\Csharp_lvl2\Сотрудники\Employees_api\Client\Employees\obj\Debug\Employees.g.resources
+K:\Arhiv\Documents\Programmer study\Csharp_lvl2\Сотрудники\Employees_api\Client\Employees\obj\Debug\Employees.Properties.Resources.resources
+K:\Arhiv\Documents\Programmer study\Csharp_lvl2\Сотрудники\Employees_api\Client\Employees\obj\Debug\Employees.csproj.GenerateResource.cache
+K:\Arhiv\Documents\Programmer study\Csharp_lvl2\Сотрудники\Employees_api\Client\Employees\obj\Debug\Employees.csproj.CoreCompileInputs.cache
+K:\Arhiv\Documents\Programmer study\Csharp_lvl2\Сотрудники\Employees_api\Client\Employees\obj\Debug\Employees.exe
+K:\Arhiv\Documents\Programmer study\Csharp_lvl2\Сотрудники\Employees_api\Client\Employees\obj\Debug\Employees.pdb

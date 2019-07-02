@@ -3,19 +3,37 @@
   <wsdl:types>
     <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
       <s:element name="Add">
-        <s:complexType />
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="dep" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="info" type="s:int" />
+          </s:sequence>
+        </s:complexType>
       </s:element>
       <s:element name="AddResponse">
         <s:complexType />
       </s:element>
       <s:element name="Edit">
-        <s:complexType />
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="dep" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="item" />
+            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="info" type="s:int" />
+          </s:sequence>
+        </s:complexType>
       </s:element>
       <s:element name="EditResponse">
         <s:complexType />
       </s:element>
       <s:element name="Remove">
-        <s:complexType />
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="dep" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="item" />
+          </s:sequence>
+        </s:complexType>
       </s:element>
       <s:element name="RemoveResponse">
         <s:complexType />
@@ -27,6 +45,16 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:complexType name="Employee">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="department" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Department" type="s:int" />
+        </s:sequence>
+      </s:complexType>
       <s:element name="GetEmployeeResponse">
         <s:complexType>
           <s:sequence>
@@ -34,15 +62,6 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:complexType name="Employee">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="department" type="s:int" />
-          <s:element minOccurs="1" maxOccurs="1" name="id" type="s:int" />
-          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="Department" type="s:int" />
-        </s:sequence>
-      </s:complexType>
       <s:element name="GetDepartment">
         <s:complexType>
           <s:sequence>
@@ -50,6 +69,13 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:complexType name="Department">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="EmpCount" type="s:int" />
+        </s:sequence>
+      </s:complexType>
       <s:element name="GetDepartmentResponse">
         <s:complexType>
           <s:sequence>
@@ -57,15 +83,14 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:complexType name="Department">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="EmpCount" type="s:int" />
-        </s:sequence>
-      </s:complexType>
       <s:element name="GetEmployees">
         <s:complexType />
       </s:element>
+      <s:complexType name="ArrayOfEmployee">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Employee" nillable="true" type="tns:Employee" />
+        </s:sequence>
+      </s:complexType>
       <s:element name="GetEmployeesResponse">
         <s:complexType>
           <s:sequence>
@@ -73,14 +98,14 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:complexType name="ArrayOfEmployee">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="Employee" nillable="true" type="tns:Employee" />
-        </s:sequence>
-      </s:complexType>
       <s:element name="GetDepartments">
         <s:complexType />
       </s:element>
+      <s:complexType name="ArrayOfDepartment">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Department" nillable="true" type="tns:Department" />
+        </s:sequence>
+      </s:complexType>
       <s:element name="GetDepartmentsResponse">
         <s:complexType>
           <s:sequence>
@@ -88,16 +113,19 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:complexType name="ArrayOfDepartment">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="Department" nillable="true" type="tns:Department" />
-        </s:sequence>
-      </s:complexType>
-      <s:element name="Choosing">
-        <s:complexType />
+      <s:element name="NameById">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id" type="s:int" />
+          </s:sequence>
+        </s:complexType>
       </s:element>
-      <s:element name="ChoosingResponse">
-        <s:complexType />
+      <s:element name="NameByIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="NameByIdResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
       </s:element>
       <s:element name="Save">
         <s:complexType />
@@ -149,11 +177,11 @@
   <wsdl:message name="GetDepartmentsSoapOut">
     <wsdl:part name="parameters" element="tns:GetDepartmentsResponse" />
   </wsdl:message>
-  <wsdl:message name="ChoosingSoapIn">
-    <wsdl:part name="parameters" element="tns:Choosing" />
+  <wsdl:message name="NameByIdSoapIn">
+    <wsdl:part name="parameters" element="tns:NameById" />
   </wsdl:message>
-  <wsdl:message name="ChoosingSoapOut">
-    <wsdl:part name="parameters" element="tns:ChoosingResponse" />
+  <wsdl:message name="NameByIdSoapOut">
+    <wsdl:part name="parameters" element="tns:NameByIdResponse" />
   </wsdl:message>
   <wsdl:message name="SaveSoapIn">
     <wsdl:part name="parameters" element="tns:Save" />
@@ -190,9 +218,9 @@
       <wsdl:input message="tns:GetDepartmentsSoapIn" />
       <wsdl:output message="tns:GetDepartmentsSoapOut" />
     </wsdl:operation>
-    <wsdl:operation name="Choosing">
-      <wsdl:input message="tns:ChoosingSoapIn" />
-      <wsdl:output message="tns:ChoosingSoapOut" />
+    <wsdl:operation name="NameById">
+      <wsdl:input message="tns:NameByIdSoapIn" />
+      <wsdl:output message="tns:NameByIdSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="Save">
       <wsdl:input message="tns:SaveSoapIn" />
@@ -264,8 +292,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="Choosing">
-      <soap:operation soapAction="http://tempuri.org/Choosing" style="document" />
+    <wsdl:operation name="NameById">
+      <soap:operation soapAction="http://tempuri.org/NameById" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -348,8 +376,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="Choosing">
-      <soap12:operation soapAction="http://tempuri.org/Choosing" style="document" />
+    <wsdl:operation name="NameById">
+      <soap12:operation soapAction="http://tempuri.org/NameById" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

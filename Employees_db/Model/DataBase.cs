@@ -31,6 +31,7 @@ namespace Employees.PresentEmpDep
         /// </summary>
         public DataBase(int empCount, int depCount)
         {
+            DataBaseDataCreate(5, 50);
             DataBaseDataRead();
             CalcDepartments();
         }
@@ -145,7 +146,7 @@ namespace Employees.PresentEmpDep
                 }
                 for (int i = 0; i < empCount; i++)
                 {
-                    var employee = new Employee($"Name_{i}", random.Next(10), i);
+                    var employee = new Employee($"Name_{i}", random.Next(depCount), i);
 
                     var sql = String.Format("INSERT INTO Employees (Id, Name, Department) VALUES (N'{0}', '{1}', '{2}')", employee.Id, employee.Name, employee.Department);
                     Debug.WriteLine(sql);

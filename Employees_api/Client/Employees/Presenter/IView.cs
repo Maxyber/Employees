@@ -16,6 +16,5 @@ namespace Employees.PresentEmpDep
         int Info { get; set; }
         string ItemName { get; set; }
         bool? CheckDep { get; set; }
-        int Index { get; set; }
     }
 }

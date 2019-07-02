@@ -53,3 +53,4 @@ K:\Arhiv\Documents\Programmer study\Csharp_lvl2\Сотрудники\Employees_a
 K:\Arhiv\Documents\Programmer study\Csharp_lvl2\Сотрудники\Employees_api\Server\Employees_server\obj\Debug\Employees_server.csproj.CopyComplete
 K:\Arhiv\Documents\Programmer study\Csharp_lvl2\Сотрудники\Employees_api\Server\Employees_server\obj\Debug\Employees_server.dll
 K:\Arhiv\Documents\Programmer study\Csharp_lvl2\Сотрудники\Employees_api\Server\Employees_server\obj\Debug\Employees_server.pdb
+K:\Arhiv\Documents\Programmer study\Csharp_lvl2\Сотрудники\Employees_api\Server\Employees_server\obj\Debug\Employees_server.csprojAssemblyReference.cache

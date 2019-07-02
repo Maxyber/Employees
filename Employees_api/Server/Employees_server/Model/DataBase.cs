@@ -49,7 +49,7 @@ namespace Employees.PresentEmpDep
         /// <summary>
         /// Метод, редактирующий сотрудника после нажатия соответствующей кнопки
         /// </summary>
-        public void ChangeEmployee(Employee vEmployee, int itemId, string name, int depId)
+        public void ChangeEmployee(Employee vEmployee, string name, int depId)
         {
             employees[employees.IndexOf(vEmployee)].Name = name;
             employees[employees.IndexOf(vEmployee)].Department = GetDepartments[depId].Id;
@@ -58,7 +58,7 @@ namespace Employees.PresentEmpDep
         /// <summary>
         /// Метод, редактирующий отдел после нажатия соответствующей кнопки
         /// </summary>
-        public void ChangeDepartment(Department vDepartment, int itemId, string name)
+        public void ChangeDepartment(Department vDepartment, string name)
         {
             departments[departments.IndexOf(vDepartment)].Name = name;
         }
@@ -171,6 +171,8 @@ namespace Employees.PresentEmpDep
         // Метод чтения данных из БД
         public void DataBaseDataRead()
         {
+            employees.Clear();
+            departments.Clear();
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))

@@ -25,40 +25,50 @@ namespace Employees_server
         public Employees_service()
         {
             // this.view = View;
-            db = new DataBase(100, 5);
+            db = new DataBase(0, 0);
         }
         [WebMethod]
-        public void AddDep(string name)
+        public void Add(bool dep, string name, int info = 0)
         {
-            db.AddDepartment(name);
+            switch (dep)
+            {
+                case (true):
+                    db.AddDepartment(name);
+                    break;
+                case (false):
+                    db.AddEmployee(name, info);
+                    db.CalcDepartments();
+                    break;
+            }
         }
         [WebMethod]
-        public void AddEmp(string name, int info)
+        public void Edit(bool dep, object item, string name, int info = 0)
         {
-            db.AddEmployee(name, info);
-            db.CalcDepartments();
+            switch (dep)
+            {
+                case true:
+                    db.ChangeDepartment((item as Department), name);
+                    break;
+                case false:
+                    db.ChangeEmployee((item as Employee), name, info);
+                    db.CalcDepartments();
+                    break;
+            }
+
         }
         [WebMethod]
-        public void EditDep()
+        public void Remove(bool dep, object item)
         {
-            db.ChangeDepartment(view.VDepartment, view.Id, view.ItemName);
-        }
-        [WebMethod]
-        public void EditEmp()
-        {
-            db.ChangeEmployee(view.VEmployee, view.Id, view.ItemName, view.Info);
-            db.CalcDepartments();
-        }
-        [WebMethod]
-        public void RemoveDep()
-        {
-            db.RemoveDepartment(view.VDepartment);
-        }
-        [WebMethod]
-        public void RemoveEmp()
-        {
-            db.RemoveEmployee(view.VEmployee);
-            db.CalcDepartments();
+            switch (dep)
+            {
+                case true:
+                    db.RemoveDepartment(item as Department);
+                    break;
+                case false:
+                    db.RemoveEmployee(item as Employee);
+                    db.CalcDepartments();
+                    break;
+            }
         }
         [WebMethod]
         public Employee GetEmployee(int i)
@@ -80,6 +90,12 @@ namespace Employees_server
         {
             return db.GetDepartments;
         }
+        [WebMethod]
+        public string NameById(int id)
+        {
+            return DataBase.DepNameById(id);
+        }
+        /*
         /// <summary>
         /// Метод, изменяющий параметры формы после выбора сотрудника в соответствующем списке
         /// </summary>
@@ -108,6 +124,7 @@ namespace Employees_server
                 view.Info = 0;
             }
         }
+        */
         [WebMethod]
         public void Save()
         {

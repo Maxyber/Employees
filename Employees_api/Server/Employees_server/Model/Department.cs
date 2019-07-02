@@ -41,6 +41,7 @@ namespace Employees
         public int Id
         {
             get { return id; }
+            set { id = value; }
         }
         /// <summary>
         /// Возвращает или присваивает количество сотрудников в отделе

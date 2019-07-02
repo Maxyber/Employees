@@ -28,38 +28,44 @@ namespace Employees
     /// </summary>
     public partial class MainWindow : Window, IView
     {
-        Employees.Employees_serviceSoapClient p = new Employees.Employees_serviceSoapClient();
-        public ObservableCollection<Employee> employees;
-        public ObservableCollection<Department> departments;
+        Employees_server.Employees_serviceSoapClient p = new Employees_server.Employees_serviceSoapClient();
+        public ObservableCollection<Employees_server.Employee> employees = new ObservableCollection<Employees_server.Employee>();
+        public ObservableCollection<Employees_server.Department> departments = new ObservableCollection<Employees_server.Department>();
+        object uItem;
+
         public MainWindow()
         {
             InitializeComponent();
-            p = new Employees.Employees_serviceSoapClient();
+            p = new Employees_server.Employees_serviceSoapClient();
             LoadData();
 
-            btnAdd.Click += delegate { p.Add(); };
-            btnEdit.Click += delegate { p.Edit(); if (checkDep.IsChecked == true) lbEmployees.Items.Refresh(); };
-            btnRemove.Click += delegate { p.Remove(); };
-            lbEmployees.SelectionChanged += delegate { checkDep.IsChecked = false; cbDepartments.Visibility = Visibility.Visible; p.Choosing(); };
-            lbDepartments.SelectionChanged += delegate { checkDep.IsChecked = true; cbDepartments.Visibility = Visibility.Hidden; p.Choosing(); };
+            btnAdd.Click += delegate { p.Add(CheckDep.Value,tbName.Text,Int32.Parse(tbInfo.Text)); };
+            btnEdit.Click += delegate { p.Edit(CheckDep.Value, uItem, tbName.Text,Int32.Parse(tbInfo.Text)); if (checkDep.IsChecked == true) lbEmployees.Items.Refresh(); };
+            btnRemove.Click += delegate { p.Remove(CheckDep.Value, uItem); };
+            lbEmployees.SelectionChanged += delegate { checkDep.IsChecked = false; cbDepartments.Visibility = Visibility.Visible; Choosing(); };
+            lbDepartments.SelectionChanged += delegate { checkDep.IsChecked = true; cbDepartments.Visibility = Visibility.Hidden; Choosing(); };
         }
         void LoadData()
         {
-            Employee[] xEmployees = p.GetEmployees() as Employee[];
-            ObservableCollection<Employee> employees = new ObservableCollection<Employee>();
-            foreach (Employee item in xEmployees)
+            Employees_server.Employee[] xEmployees = p.GetEmployees();
+            Employees_server.Department[] xDepartments = p.GetDepartments();
+            foreach (Employees_server.Employee item in xEmployees)
             {
-
+                employees.Add(item);
+            }
+            foreach (Employees_server.Department item in xDepartments)
+            {
+                departments.Add(item);
             }
         }
-        public Department VDepartment
+        public Employees_server.Department VDepartment
         {
-            get => (lbDepartments.SelectedItem as Department);
+            get => (lbDepartments.SelectedItem as Employees_server.Department);
             set { }
         }
-        public Employee VEmployee
+        public Employees_server.Employee VEmployee
         {
-            get => (lbEmployees.SelectedItem as Employee);
+            get => (lbEmployees.SelectedItem as Employees_server.Employee);
             set { }
         }
         public int Id
@@ -100,27 +106,30 @@ namespace Employees
             get => checkDep.IsChecked;
             set => checkDep.IsChecked = value;
         }
-        public int Index
+        public void Choosing()
         {
-            get
+            try
             {
-                try
+                if (CheckDep.Value)
                 {
-                    if (CheckDep.Value) return p.GetDepartments().IndexOf(VDepartment);
-                    else return p.GetEmployees().IndexOf(VEmployee);
+                    uItem = lbDepartments.SelectedItem as object;
+                    tbId.Text = (lbDepartments.SelectedItem as Employees_server.Department).Id.ToString();
+                    tbName.Text = (lbDepartments.SelectedItem as Employees_server.Department).Name;
+                    tbInfo.Text = (lbDepartments.SelectedItem as Employees_server.Department).EmpCount.ToString();
                 }
-                catch (NullReferenceException)
+                else
                 {
-                    return 0;
-                }
-                catch (ArgumentOutOfRangeException)
-                {
-                    Console.WriteLine("MainWindow.Index exception");
-                    return 0;
+                    uItem = lbEmployees.SelectedItem as object;
+                    tbId.Text = (lbEmployees.SelectedItem as Employees_server.Employee).Id.ToString();
+                    tbName.Text = (lbEmployees.SelectedItem as Employees_server.Employee).Name;
+                    tbInfo.Text = (lbEmployees.SelectedItem as Employees_server.Employee).Department.ToString();
                 }
             }
-            set
+            catch (ArgumentOutOfRangeException)
             {
+                tbId.Text = "";
+                tbName.Text = "";
+                tbInfo.Text = "";
             }
         }
         // Методы, обрабатывающие события
@@ -130,7 +139,7 @@ namespace Employees
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
-            p.Save();
+            // p.Save();
         }
     }
 }

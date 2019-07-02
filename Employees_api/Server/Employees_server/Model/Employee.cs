@@ -43,6 +43,7 @@ namespace Employees
         public int Id
         {
             get { return id; }
+            set { id = value; }
         }
         /// <summary>
         /// Возвращает или прикрепляет сотрудника к отделу
