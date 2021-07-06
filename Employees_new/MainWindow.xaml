@@ -10,6 +10,7 @@
         Width="830" VerticalAlignment="Center" Closed="Window_Closed" ResizeMode="NoResize"
         >
     <Window.Resources>
+        <local:DepartmentConverter x:Key="Conv"/>
     </Window.Resources>
     <Grid Margin="0,0,0,0">
         <Grid.ColumnDefinitions>
@@ -18,29 +19,33 @@
             <ColumnDefinition Width="180*"/>
         </Grid.ColumnDefinitions>
         <ListView Name="lbEmployees" 
-                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                  ItemsSource="{Binding GetEmployees, UpdateSourceTrigger=PropertyChanged}"
                  Grid.Column="0"
                  Margin="10">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ID" Width="30"/>
-                    <GridViewColumn Header="Имя сотрудника" Width="150"/>
-                    <GridViewColumn Header="Название отдела" Width="150"/>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="25"/>
+                    <GridViewColumn Header="Имя сотрудника" DisplayMemberBinding="{Binding Name}" Width="150"/>
+                    <GridViewColumn Header="Название отдела" x:Name="depId" 
+                                    DisplayMemberBinding="{Binding Department, Converter={StaticResource Conv}, UpdateSourceTrigger=PropertyChanged}"
+                                    Width="150"/>
                 </GridView>
             </ListView.View>
         </ListView>
         <ListView Name="lbDepartments" 
                  HorizontalAlignment="Stretch" 
                  Grid.Column="1"
+                 ItemsSource="{Binding GetDepartments, UpdateSourceTrigger=PropertyChanged}"
                  Margin="10" 
                  VerticalAlignment="Stretch">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="ID" Width="30"/>
-                        <GridViewColumn Header="Название отдела" Width="130"/>
-                        <GridViewColumn Header="Кол-во" Width="70"/>
-                    </GridView>
-                </ListView.View>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="23"/>
+                    <GridViewColumn Header="Название отдела" x:Name="DepName" DisplayMemberBinding="{Binding Name}" Width="130"/>
+                    <GridViewColumn Header="Кол-во" DisplayMemberBinding="{Binding EmpCount}" Width="70"/>
+                </GridView>
+            </ListView.View>
         </ListView>
         <Button x:Name="btnAdd" 
                 Content="Добавить" 
@@ -110,6 +115,8 @@
                   Margin="45,270,0,0" 
                   VerticalAlignment="Top" 
                   Width="120" Height="22"
+                  ItemsSource="{Binding GetDepartments, UpdateSourceTrigger=PropertyChanged}"
+                  DisplayMemberPath="Name"
                   Visibility="Hidden" 
                   Grid.Column="2"/>
         <CheckBox x:Name="checkDep" Content="CheckBox" Grid.Column="2" HorizontalAlignment="Left" Margin="13,293,0,0" VerticalAlignment="Top" Visibility="Hidden"/>
