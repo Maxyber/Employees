@@ -64,7 +64,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Model\Department.cs" />
-    <Compile Include="Presenter\DataBase.cs" />
+    <Compile Include="Model\DataBase.cs" />
     <Compile Include="Presenter\DepartmentConverter.cs" />
     <Compile Include="Model\Employee.cs" />
     <Compile Include="MainWindow.xaml.cs">
